@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class State : MonoBehaviour
+public abstract class State
 {
     protected Character _character;
     protected StateMachine _stateMachine;
@@ -15,26 +13,26 @@ public abstract class State : MonoBehaviour
 
     public virtual void Enter()
     {
-
+        Debug.Log("State Enter");
     }
 
     public virtual void HandleInput()
     {
-
+        Debug.Log("State Handle");
     }
 
     public virtual void LogicUpdate()
     {
-
+        Debug.Log("State Logic");
     }
 
     public virtual void PhysicsUpdate()
     {
-
+        Debug.Log("State Physics");
     }
 
     public virtual void Exit()
     {
-
+        Debug.Log("State Exit");
     }
 }
