@@ -13,26 +13,21 @@ public abstract class State
 
     public virtual void Enter()
     {
-        Debug.Log("State Enter");
     }
 
     public virtual void HandleInput()
     {
-        Debug.Log("State Handle");
     }
 
     public virtual void LogicUpdate()
     {
-        Debug.Log("State Logic");
     }
 
     public virtual void PhysicsUpdate()
     {
-        Debug.Log("State Physics");
     }
 
     public virtual void Exit()
     {
-        Debug.Log("State Exit");
     }
 }
