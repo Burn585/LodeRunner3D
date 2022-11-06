@@ -11,6 +11,7 @@ public class Character : MonoBehaviour
     public Rigidbody _rigidbody;
     public StateMachine StateMachine;
     public MovingState MovingState;
+    public IdleState IdleState;
 
     private float _movementSpeed = 5f;
 
@@ -20,13 +21,14 @@ public class Character : MonoBehaviour
     {
         StateMachine = new StateMachine();
         MovingState = new MovingState(this, StateMachine);
+        IdleState = new IdleState(this, StateMachine);
     }
 
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _switchAnimations.enabled = true;
-        StateMachine.Initialize(MovingState);
+        StateMachine.Initialize(IdleState);
     }
 
     private void Update()

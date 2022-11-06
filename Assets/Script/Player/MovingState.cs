@@ -6,7 +6,8 @@ using UnityEngine.Events;
 public class MovingState : State
 {
     private float _horizontalMove;
-    public event UnityAction<float> _changeDirection;
+    public event UnityAction<float> ChangeDirection;
+    public event UnityAction<string> StopHorizontalMove;
 
     public MovingState(Character character, StateMachine stateMachine) : base(character, stateMachine)
     {
@@ -30,7 +31,15 @@ public class MovingState : State
         base.LogicUpdate();
 
         if (_horizontalMove != 0)
-            _changeDirection?.Invoke(_horizontalMove);
+        {
+            ChangeDirection?.Invoke(_horizontalMove);
+        }
+        else
+        {
+            _stateMachine.ChangeState(_character.IdleState);
+            StopHorizontalMove?.Invoke("Idle");
+        }
+            
     }
 
     public override void PhysicsUpdate()
