@@ -19,11 +19,11 @@ public abstract class State
     {
     }
 
-    public virtual void LogicUpdate()
+    public virtual void Transition()
     {
     }
 
-    public virtual void PhysicsUpdate()
+    public virtual void LogicUpdate()
     {
     }
 

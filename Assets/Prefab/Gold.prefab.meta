@@ -1,6 +1,19 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream:Assets/Prefab/Gold.prefab.meta
 guid: 1f9abd20bbe8f584888282b6f07d3e60
 PrefabImporter:
+=======
+<<<<<<< Updated upstream
+guid: 1bd11b28cb7dfd24e8fea8e72813eb0e
+folderAsset: yes
+DefaultImporter:
+>>>>>>> Stashed changes:Assets/Script/Level.meta
+=======
+guid: 26735d8676448d344847d5e4eac8a838
+folderAsset: yes
+DefaultImporter:
+>>>>>>> Stashed changes:Assets/Script/Player/State.meta
+>>>>>>> Stashed changes
   externalObjects: {}
   userData: 
   assetBundleName: 

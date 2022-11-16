@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MovingState : State
+public class RunState : State
 {
-    private float _horizontalMove;
     public event UnityAction<float> ChangeDirection;
-    public event UnityAction<string> StopHorizontalMove;
+    public event UnityAction<string> StartStateRun;
 
-    public MovingState(Character character, StateMachine stateMachine) : base(character, stateMachine)
+    private float _horizontalMove;
+    private float _verticalMove;
+
+    public RunState(Character character, StateMachine stateMachine) : base(character, stateMachine)
     {
     }
 
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("State enter MovingState");
+        //Debug.Log("Enter moving state");
+
+        StartStateRun?.Invoke("Run");
     }
 
     public override void HandleInput()
@@ -24,27 +28,24 @@ public class MovingState : State
         base.HandleInput();
 
         _horizontalMove = Input.GetAxis("Horizontal");
+        _verticalMove = Input.GetAxis("Vertical");
+    }
+
+    public override void Transition()
+    {
+        base.Transition();
+
+        if (_horizontalMove == 0)
+        {
+            _stateMachine.ChangeState(_character.IdleState);
+        }
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if (_horizontalMove != 0)
-        {
-            ChangeDirection?.Invoke(_horizontalMove);
-        }
-        else
-        {
-            _stateMachine.ChangeState(_character.IdleState);
-            StopHorizontalMove?.Invoke("Idle");
-        }
-            
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
+        ChangeDirection?.Invoke(_horizontalMove);
         _character._rigidbody.position += new Vector3(_horizontalMove, 0, 0) * _character.MovementSpeed * Time.deltaTime;
     }
 }

@@ -5,8 +5,7 @@ using UnityEngine.Events;
 
 public class IdleState : State
 {
-    public event UnityAction<string> StartHorizontalMove;
-    public event UnityAction<string> StartVerticalMove;
+    public event UnityAction<string> StartStateIdle;
 
     private float _horizontalMove;
     private float _verticalMove;
@@ -18,8 +17,9 @@ public class IdleState : State
     public override void Enter()
     {
         base.Enter();
+        //Debug.Log("Enter idle state");
 
-        Debug.Log("Enter idle state");
+        StartStateIdle?.Invoke("Idle");
     }
 
     public override void HandleInput()
@@ -30,20 +30,18 @@ public class IdleState : State
         _verticalMove = Input.GetAxis("Vertical");
     }
 
-    public override void LogicUpdate()
+    public override void Transition()
     {
-        base.LogicUpdate();
+        base.Transition();
 
         if(_horizontalMove != 0)
         {
-            _stateMachine.ChangeState(_character.MovingState);
-            StartHorizontalMove?.Invoke("Run");
+            _stateMachine.ChangeState(_character.RunState);
         }
 
-        if(_verticalMove != 0)
+        if(_verticalMove != 0 && _character.IsMoveStair)
         {
-            _stateMachine.ChangeState(_character.MovingState);
-            StartVerticalMove?.Invoke("Run");
+            _stateMachine.ChangeState(_character.ClimbState);
         }
     }
 }

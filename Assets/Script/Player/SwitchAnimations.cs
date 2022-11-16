@@ -9,31 +9,53 @@ public class SwitchAnimations : MonoBehaviour
 
     private void OnEnable()
     {
-        _character.MovingState.ChangeDirection += Flip;
-        _character.MovingState.StopHorizontalMove += AnimationChanger;
+        _character.IdleState.StartStateIdle += AnimationChanger;
 
-        _character.IdleState.StartHorizontalMove += AnimationChanger;
+        _character.RunState.ChangeDirection += Flip;
+        _character.RunState.StartStateRun += AnimationChanger;
+
+        _character.ClimbState.StartVerticalMove += AnimationChanger;
+        _character.ClimbState.PauseAnimation += AnimationStartStop;
+
+        _character.FallState.StartStateFall += AnimationChanger;
     }
 
     private void OnDisable()
     {
-        _character.MovingState.ChangeDirection -= Flip;
-        _character.MovingState.StopHorizontalMove -= AnimationChanger;
+        _character.IdleState.StartStateIdle -= AnimationChanger;
 
-        _character.IdleState.StartHorizontalMove -= AnimationChanger;
+        _character.RunState.ChangeDirection -= Flip;
+        _character.RunState.StartStateRun -= AnimationChanger;
+
+        _character.ClimbState.StartVerticalMove -= AnimationChanger;
+        _character.ClimbState.PauseAnimation -= AnimationStartStop;
+
+        _character.FallState.StartStateFall -= AnimationChanger;
     }
 
     private void Flip(float horizontalMove)
     {
         if(horizontalMove > 0)
-            _character._rigidbody.rotation = Quaternion.Euler(0, 90, 0);
+            _character._rigidbody.rotation = Quaternion.Euler(0, 180, 0);
 
         if (horizontalMove < 0)
-            _character._rigidbody.rotation = Quaternion.Euler(0, -90, 0);
+            _character._rigidbody.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     private void AnimationChanger(string animationName)
     {
         _animator.Play(animationName);
+    }
+
+    private void AnimationStartStop(bool play)
+    {
+        if (play)
+        {
+            _animator.StartPlayback();
+        }
+        else
+        {
+            _animator.StopPlayback();
+        }
     }
 }
