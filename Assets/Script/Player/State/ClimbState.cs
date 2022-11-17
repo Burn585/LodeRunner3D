@@ -35,11 +35,19 @@ public class ClimbState : State
     {
         base.Transition();
 
-        if(_horizontalMove != 0)
+        if(_horizontalMove != 0 && _character.IsMoveStair)
         {
-            StartVerticalMove?.Invoke("Run");
-            _character.StateMachine.ChangeState(_character.RunState);
+            _stateMachine.ChangeState(_character.RunState);
         }
+
+        if(_verticalMove != 0 && !_character.IsMoveStair)
+        {
+            _stateMachine.ChangeState(_character.IdleState);
+        }
+
+        //Die
+        //Crawl
+        //Win
     }
 
     public override void LogicUpdate()

@@ -43,5 +43,9 @@ public class IdleState : State
         {
             _stateMachine.ChangeState(_character.ClimbState);
         }
+
+        //Crawl
+        //Die
+        //Attack
     }
 }

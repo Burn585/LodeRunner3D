@@ -39,6 +39,15 @@ public class RunState : State
         {
             _stateMachine.ChangeState(_character.IdleState);
         }
+
+        if (!_character.IsGrounded && !_character.IsMoveStair)
+        {
+            _stateMachine.ChangeState(_character.FallState);
+        }
+
+        //Die
+        //Crawl
+        //Fall
     }
 
     public override void LogicUpdate()
