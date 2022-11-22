@@ -7,6 +7,8 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     [SerializeField] private SwitchAnimations _switchAnimations;
+    [SerializeField] private SwitchSound _switchSound;
+    [SerializeField] private float _movementSpeed = 5f;
 
     public Rigidbody _rigidbody;
     public StateMachine StateMachine;
@@ -19,12 +21,10 @@ public class Character : MonoBehaviour
     public CrawlState CrawlState;
     public DieState DieState;
     public WinState WinState;
-
-    private float _movementSpeed = 5f;
+    
     private bool _isMoveStair;
     private Vector3 _stairPosition;
     private bool _isGrounded;
-
 
     public float a;
     public float b;
@@ -53,6 +53,7 @@ public class Character : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _switchAnimations.enabled = true;
+        _switchSound.enabled = true;
         StateMachine.Initialize(IdleState);
     }
 

@@ -7,6 +7,7 @@ public class RunState : State
 {
     public event UnityAction<float> ChangeDirection;
     public event UnityAction<string> StartStateRun;
+    public event UnityAction<string> EndStateRun;
 
     private float _horizontalMove;
     private float _verticalMove;
@@ -56,5 +57,11 @@ public class RunState : State
 
         ChangeDirection?.Invoke(_horizontalMove);
         _character._rigidbody.position += new Vector3(_horizontalMove, 0, 0) * _character.MovementSpeed * Time.deltaTime;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        EndStateRun?.Invoke("Run");
     }
 }
