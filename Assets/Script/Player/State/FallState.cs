@@ -38,7 +38,7 @@ public class FallState : State
             _stateMachine.ChangeState(_character.IdleState);
         }
 
-        if (_character.IsMoveStair && _verticalMove != 0)
+        if (_character.IsMoveStair)
         {
             _stateMachine.ChangeState(_character.ClimbState);
         }

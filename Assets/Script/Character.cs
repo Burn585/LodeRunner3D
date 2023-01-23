@@ -26,12 +26,6 @@ public class Character : MonoBehaviour
     private Vector3 _stairPosition;
     private bool _isGrounded;
 
-    public float a;
-    public float b;
-    public float c;
-    public float d;
-
-
     public float MovementSpeed => _movementSpeed;
     public bool IsMoveStair => _isMoveStair;
     public Vector3 StairPosition => _stairPosition;
@@ -64,7 +58,9 @@ public class Character : MonoBehaviour
         StateMachine.CurrentState.LogicUpdate();
 
         _isGrounded = CheckGround();
-        //Debug.Log(_isMoveStair);
+        Debug.Log("Ground  "+ _isGrounded);
+        Debug.Log("Stair  " + _isMoveStair);
+        Debug.Log("grav   " + _rigidbody.useGravity);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -73,6 +69,7 @@ public class Character : MonoBehaviour
         {
             _isMoveStair = true;
             _stairPosition = stair.transform.position;
+            //_rigidbody.useGravity = false;
         }
     }
 
@@ -85,11 +82,12 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerStay(Collider other)
     {
-        if (collision.gameObject.TryGetComponent<Brick>(out Brick brick))
+        if(other.TryGetComponent<Stair>(out Stair stair))
         {
-            Debug.Log(1111111111111111);
+            _isMoveStair = true;
+            _rigidbody.useGravity = false;
         }
     }
 

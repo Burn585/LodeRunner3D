@@ -20,6 +20,7 @@ public class ClimbState : State
         base.Enter();
         //Debug.Log("Enter climb state");
 
+        //_character._rigidbody.useGravity = false;
         StartVerticalMove?.Invoke("Climb");
         _character._rigidbody.position = new Vector3(_character.StairPosition.x + 0.8f, _character._rigidbody.position.y, _character._rigidbody.position.z);
     }
@@ -54,7 +55,7 @@ public class ClimbState : State
     {
         base.LogicUpdate();
 
-        _character._rigidbody.useGravity = false;
+        
         _character._rigidbody.position += new Vector3(0, _verticalMove, 0) * _character.MovementSpeed * Time.deltaTime;
 
         if(_verticalMove == 0)
@@ -70,6 +71,7 @@ public class ClimbState : State
     public override void Exit()
     {
         base.Exit();
+        //_character._rigidbody.useGravity = true;
         PauseAnimation?.Invoke(false);
     }
 }
