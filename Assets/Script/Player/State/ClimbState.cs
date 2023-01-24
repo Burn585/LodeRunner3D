@@ -5,7 +5,8 @@ using UnityEngine.Events;
 
 public class ClimbState : State
 {
-    public event UnityAction<string> StartVerticalMove;
+    public event UnityAction<string> StartStateClimb;
+    public event UnityAction<string> EndStateClimb;
     public event UnityAction<bool> PauseAnimation;
 
     private float _verticalMove;
@@ -18,10 +19,8 @@ public class ClimbState : State
     public override void Enter()
     {
         base.Enter();
-        //Debug.Log("Enter climb state");
 
-        //_character._rigidbody.useGravity = false;
-        StartVerticalMove?.Invoke("Climb");
+        StartStateClimb?.Invoke("Climb");
         _character._rigidbody.position = new Vector3(_character.StairPosition.x + 0.8f, _character._rigidbody.position.y, _character._rigidbody.position.z);
     }
 
@@ -55,23 +54,24 @@ public class ClimbState : State
     {
         base.LogicUpdate();
 
-        
         _character._rigidbody.position += new Vector3(0, _verticalMove, 0) * _character.MovementSpeed * Time.deltaTime;
 
         if(_verticalMove == 0)
         {
-            PauseAnimation?.Invoke(true);
+            //PauseAnimation?.Invoke(true);
+            //EndStateClimb?.Invoke("Climb");
         }
         else
         {
-            PauseAnimation?.Invoke(false);
+            //PauseAnimation?.Invoke(false);
+            //StartStateClimb?.Invoke("Climb");
         }
     }
 
     public override void Exit()
     {
         base.Exit();
-        //_character._rigidbody.useGravity = true;
         PauseAnimation?.Invoke(false);
+        EndStateClimb?.Invoke("Climb");
     }
 }

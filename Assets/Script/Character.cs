@@ -10,6 +10,10 @@ public class Character : MonoBehaviour
     [SerializeField] private SwitchSound _switchSound;
     [SerializeField] private float _movementSpeed = 5f;
 
+    private bool _isMoveStair;
+    private Vector3 _stairPosition;
+    private bool _isGrounded;
+
     public Rigidbody _rigidbody;
     public StateMachine StateMachine;
 
@@ -21,10 +25,6 @@ public class Character : MonoBehaviour
     public CrawlState CrawlState;
     public DieState DieState;
     public WinState WinState;
-    
-    private bool _isMoveStair;
-    private Vector3 _stairPosition;
-    private bool _isGrounded;
 
     public float MovementSpeed => _movementSpeed;
     public bool IsMoveStair => _isMoveStair;
@@ -59,8 +59,10 @@ public class Character : MonoBehaviour
 
         _isGrounded = CheckGround();
         Debug.Log("Ground  "+ _isGrounded);
-        Debug.Log("Stair  " + _isMoveStair);
-        Debug.Log("grav   " + _rigidbody.useGravity);
+        //Debug.Log("Stair  " + _isMoveStair);
+        //Debug.Log("grav   " + _rigidbody.useGravity);
+
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -69,7 +71,9 @@ public class Character : MonoBehaviour
         {
             _isMoveStair = true;
             _stairPosition = stair.transform.position;
-            //_rigidbody.useGravity = false;
+            _rigidbody.useGravity = false;
+            Debug.Log("Enter");
+            _rigidbody.velocity = Vector3.zero;
         }
     }
 
@@ -79,30 +83,28 @@ public class Character : MonoBehaviour
         {
             _isMoveStair = false;
             _rigidbody.useGravity = true;
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if(other.TryGetComponent<Stair>(out Stair stair))
-        {
-            _isMoveStair = true;
-            _rigidbody.useGravity = false;
+            Debug.Log("Exit");
         }
     }
 
     private bool CheckGround()
     {
-        RaycastHit hit;
-        Ray ray = new Ray(transform.position, Vector3.down);
+        float offset = 0.2f;
+        Vector3 _centerCheckBoxPoint = transform.position;
+        Vector3 _sizeBox = new Vector3(0.8f, 0.1f, 0.1f);
 
-        if (Physics.Raycast(ray, out hit))
+        _centerCheckBoxPoint.y -= offset;
+
+        if(Physics.CheckBox(_centerCheckBoxPoint, _sizeBox))
         {
-            Debug.DrawRay(transform.position, Vector3.down);
-            if (hit.distance < 0.2f)
-                return true;
+            return true;
         }
 
         return false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        //Gizmos.DrawCube(transform.position, new Vector3(0.8f, 1.5f, 0.2f));
     }
 }

@@ -14,7 +14,7 @@ public class SwitchAnimations : MonoBehaviour
         _character.RunState.ChangeDirection += Flip;
         _character.RunState.StartStateRun += AnimationChanger;
 
-        _character.ClimbState.StartVerticalMove += AnimationChanger;
+        _character.ClimbState.StartStateClimb += AnimationChanger;
         _character.ClimbState.PauseAnimation += AnimationStartStop;
 
         _character.FallState.StartStateFall += AnimationChanger;
@@ -27,7 +27,7 @@ public class SwitchAnimations : MonoBehaviour
         _character.RunState.ChangeDirection -= Flip;
         _character.RunState.StartStateRun -= AnimationChanger;
 
-        _character.ClimbState.StartVerticalMove -= AnimationChanger;
+        _character.ClimbState.StartStateClimb -= AnimationChanger;
         _character.ClimbState.PauseAnimation -= AnimationStartStop;
 
         _character.FallState.StartStateFall -= AnimationChanger;

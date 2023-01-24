@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class FallState : State
 {
     public event UnityAction<string> StartStateFall;
+    public event UnityAction<string> EndStateFall;
 
     private float _horizontalMove;
     private float _verticalMove;
@@ -50,5 +51,7 @@ public class FallState : State
     public override void Exit()
     {
         base.Exit();
+
+        EndStateFall?.Invoke("Fall");
     }
 }
