@@ -58,13 +58,11 @@ public class ClimbState : State
 
         if(_verticalMove == 0)
         {
-            //PauseAnimation?.Invoke(true);
-            //EndStateClimb?.Invoke("Climb");
+            PauseAnimation?.Invoke(true);
         }
         else
         {
-            //PauseAnimation?.Invoke(false);
-            //StartStateClimb?.Invoke("Climb");
+            PauseAnimation?.Invoke(false);
         }
     }
 
