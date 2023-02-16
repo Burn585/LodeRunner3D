@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
 
@@ -13,6 +14,9 @@ public class Character : MonoBehaviour
     private bool _isMoveStair;
     private Vector3 _stairPosition;
     private bool _isGrounded;
+    private LayerMask _groundMask = 6;
+
+    public UnityAction PickGold;
 
     public Rigidbody _rigidbody;
     public StateMachine StateMachine;
@@ -58,7 +62,7 @@ public class Character : MonoBehaviour
         StateMachine.CurrentState.LogicUpdate();
 
         _isGrounded = CheckGround();
-        Debug.Log("Ground  "+ _isGrounded);
+        //Debug.Log("Ground  "+ _isGrounded);
         //Debug.Log("Stair  " + _isMoveStair);
         //Debug.Log("grav   " + _rigidbody.useGravity);
 
@@ -72,8 +76,13 @@ public class Character : MonoBehaviour
             _isMoveStair = true;
             _stairPosition = stair.transform.position;
             _rigidbody.useGravity = false;
-            Debug.Log("Enter");
             _rigidbody.velocity = Vector3.zero;
+        }
+
+        if(other.TryGetComponent<Gold>(out Gold gold))
+        {
+            PickGold?.Invoke();
+            Destroy(gold.gameObject);
         }
     }
 
@@ -83,21 +92,25 @@ public class Character : MonoBehaviour
         {
             _isMoveStair = false;
             _rigidbody.useGravity = true;
-            Debug.Log("Exit");
         }
     }
 
     private bool CheckGround()
     {
+        Collider[] colliders;
         float offset = 0.2f;
-        Vector3 _centerCheckBoxPoint = transform.position;
-        Vector3 _sizeBox = new Vector3(0.8f, 0.1f, 0.1f);
+        Vector3 centerCheckBoxPoint = transform.position;
+        Vector3 sizeBox = new Vector3(0.6f, 0.1f, 0.1f);
 
-        _centerCheckBoxPoint.y -= offset;
+        centerCheckBoxPoint.y -= offset;
+        colliders = Physics.OverlapBox(centerCheckBoxPoint, sizeBox);
 
-        if(Physics.CheckBox(_centerCheckBoxPoint, _sizeBox))
+        foreach (var item in colliders)
         {
-            return true;
+            if (item.TryGetComponent<Brick>(out Brick brick))
+            {
+                return true;
+            }
         }
 
         return false;

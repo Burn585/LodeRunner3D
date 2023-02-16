@@ -21,7 +21,7 @@ public class RunState : State
         base.Enter();
         //Debug.Log("Enter moving state");
 
-        StartStateRun?.Invoke("Run");
+        StartStateRun?.Invoke(AnimatorPlayer.States.Run);
     }
 
     public override void HandleInput()
@@ -62,6 +62,6 @@ public class RunState : State
     public override void Exit()
     {
         base.Exit();
-        EndStateRun?.Invoke("Run");
+        EndStateRun?.Invoke(AnimatorPlayer.States.Run);
     }
 }

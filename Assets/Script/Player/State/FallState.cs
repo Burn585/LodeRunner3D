@@ -19,7 +19,7 @@ public class FallState : State
     {
         base.Enter();
 
-        StartStateFall?.Invoke("Fall");
+        StartStateFall?.Invoke(AnimatorPlayer.States.Fall);
     }
 
     public override void HandleInput()
@@ -52,6 +52,6 @@ public class FallState : State
     {
         base.Exit();
 
-        EndStateFall?.Invoke("Fall");
+        EndStateFall?.Invoke(AnimatorPlayer.States.Fall);
     }
 }

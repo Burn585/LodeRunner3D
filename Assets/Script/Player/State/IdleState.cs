@@ -19,7 +19,7 @@ public class IdleState : State
         base.Enter();
         //Debug.Log("Enter idle state");
 
-        StartStateIdle?.Invoke("Idle");
+        StartStateIdle?.Invoke(AnimatorPlayer.States.Idle);
     }
 
     public override void HandleInput()

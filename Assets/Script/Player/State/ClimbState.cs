@@ -20,7 +20,7 @@ public class ClimbState : State
     {
         base.Enter();
 
-        StartStateClimb?.Invoke("Climb");
+        StartStateClimb?.Invoke(AnimatorPlayer.States.Climb);
         _character._rigidbody.position = new Vector3(_character.StairPosition.x + 0.8f, _character._rigidbody.position.y, _character._rigidbody.position.z);
     }
 
@@ -40,7 +40,7 @@ public class ClimbState : State
             _stateMachine.ChangeState(_character.RunState);
         }
 
-        if(_verticalMove != 0 && !_character.IsMoveStair)
+        if(_verticalMove == 0 || !_character.IsMoveStair)
         {
             _stateMachine.ChangeState(_character.IdleState);
         }
@@ -70,6 +70,6 @@ public class ClimbState : State
     {
         base.Exit();
         PauseAnimation?.Invoke(false);
-        EndStateClimb?.Invoke("Climb");
+        EndStateClimb?.Invoke(AnimatorPlayer.States.Climb);
     }
 }
