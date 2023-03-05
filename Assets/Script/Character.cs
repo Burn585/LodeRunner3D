@@ -84,6 +84,12 @@ public class Character : MonoBehaviour
             PickGold?.Invoke();
             Destroy(gold.gameObject);
         }
+
+        if(other.TryGetComponent<Enemy>(out Enemy enemy))
+        {
+            Debug.Log("game over");
+            StateMachine.ChangeState(DieState);
+        }
     }
 
     private void OnTriggerExit(Collider other)
