@@ -7438,6 +7438,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1791202478902420310, guid: 1f9abd20bbe8f584888282b6f07d3e60, type: 3}
   m_PrefabInstance: {fileID: 244990614}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &718496655 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1084767808555281491, guid: 66b2ee9eef00e8c4a96789726fd549f4, type: 3}
+  m_PrefabInstance: {fileID: 6610147162379447767}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &725457785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20779,6 +20784,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1084767808555281491, guid: 66b2ee9eef00e8c4a96789726fd549f4, type: 3}
+      propertyPath: Loop
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1163602273050226466, guid: 66b2ee9eef00e8c4a96789726fd549f4, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -21191,6 +21200,10 @@ PrefabInstance:
       propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8506039618222118198, guid: 66b2ee9eef00e8c4a96789726fd549f4, type: 3}
+      propertyPath: _die
+      value: 
+      objectReference: {fileID: 718496655}
     - target: {fileID: 8506039618222118198, guid: 66b2ee9eef00e8c4a96789726fd549f4, type: 3}
       propertyPath: _run
       value: 

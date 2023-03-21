@@ -18,6 +18,8 @@ public class SwitchAnimations : MonoBehaviour
         _character.ClimbState.PauseAnimation += AnimationStartStop;
 
         _character.FallState.StartStateFall += AnimationChanger;
+
+        _character.DieState.StartStateDie += AnimationChanger;
     }
 
     private void OnDisable()
@@ -31,6 +33,8 @@ public class SwitchAnimations : MonoBehaviour
         _character.ClimbState.PauseAnimation -= AnimationStartStop;
 
         _character.FallState.StartStateFall -= AnimationChanger;
+
+        _character.DieState.StartStateDie -= AnimationChanger;
     }
 
     private void Flip(float horizontalMove)
