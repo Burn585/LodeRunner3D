@@ -20,6 +20,8 @@ public class SwitchAnimations : MonoBehaviour
         _character.FallState.StartStateFall += AnimationChanger;
 
         _character.DieState.StartStateDie += AnimationChanger;
+
+        _character.WinState.StartStateWin += AnimationChanger;
     }
 
     private void OnDisable()
@@ -35,6 +37,8 @@ public class SwitchAnimations : MonoBehaviour
         _character.FallState.StartStateFall -= AnimationChanger;
 
         _character.DieState.StartStateDie -= AnimationChanger;
+
+        _character.WinState.StartStateWin -= AnimationChanger;
     }
 
     private void Flip(float horizontalMove)

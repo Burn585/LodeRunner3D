@@ -11,7 +11,6 @@ public class StateMachine
     public void ChangeState(State state)
     {
         CurrentState.Exit();
-
         CurrentState = state;
         CurrentState.Enter();
     }

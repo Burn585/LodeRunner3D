@@ -12,6 +12,8 @@ public class MoveEnemy : MonoBehaviour
     private void Update()
     {
         Transform target = _pathPoint[_currentPoint];
+        Vector3 rotateLeft = new Vector3(0, 180, 0);
+        Vector3 rotateRight = new Vector3(0, 0, 0);
 
         transform.position = Vector3.MoveTowards(transform.position, target.position, _speed * Time.deltaTime);
 
@@ -26,11 +28,11 @@ public class MoveEnemy : MonoBehaviour
 
             if (_pathPoint[_currentPoint].position.x > transform.position.x)
             {
-                transform.rotation = Quaternion.Euler(0, 180, 0);
+                transform.rotation = Quaternion.Euler(rotateLeft);
             }
             else
             {
-                transform.rotation = Quaternion.Euler(0, 0, 0);
+                transform.rotation = Quaternion.Euler(rotateRight);
             }
         }
     }

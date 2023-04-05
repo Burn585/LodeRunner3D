@@ -11,6 +11,7 @@ public class SwitchSound : MonoBehaviour
     [SerializeField] private AudioSource _fall;
     [SerializeField] private AudioSource _attack;
     [SerializeField] private AudioSource _die;
+    [SerializeField] private AudioSource _win;
 
     private void OnEnable()
     {
@@ -24,6 +25,8 @@ public class SwitchSound : MonoBehaviour
         _character.FallState.EndStateFall += Stop;
 
         _character.DieState.StartStateDie += Play;
+
+        _character.WinState.StartStateWin += Play;
     }
 
     private void OnDisable()
@@ -38,6 +41,8 @@ public class SwitchSound : MonoBehaviour
         _character.FallState.EndStateFall -= Stop;
 
         _character.DieState.StartStateDie -= Play;
+
+        _character.WinState.StartStateWin -= Play;
     }
 
     private void Play(string sound)
@@ -61,6 +66,9 @@ public class SwitchSound : MonoBehaviour
                 break;
             case "Die":
                 _die.Play();
+                break;
+            case "Win":
+                _win.Play();
                 break;
         }
     }
@@ -86,6 +94,9 @@ public class SwitchSound : MonoBehaviour
                 break;
             case "Die":
                 _die.Stop();
+                break;
+            case "Win":
+                _win.Stop();
                 break;
         }
     }

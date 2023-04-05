@@ -7,20 +7,23 @@ public class Game : MonoBehaviour
 {
     [SerializeField] private Character _character;
     [SerializeField] private AudioSource _gold;
+    [SerializeField] private Stair _stairEndGame;
 
-    private int _countGold = 10;
-    private WaitForSeconds _delay = new WaitForSeconds(5);
+    private int _countGold = 1;
+    private WaitForSeconds _delay = new WaitForSeconds(4);
 
     private void OnEnable()
     {
         _character.PickGold += PickGoldPlayer;
         _character.DieState.EndStateDie += ReloadGame;
+        _character.WinState.EndStateWin += ReloadGame;
     }
 
     private void OnDisable()
     {
         _character.PickGold -= PickGoldPlayer;
         _character.DieState.EndStateDie -= ReloadGame;
+        _character.WinState.EndStateWin -= ReloadGame;
     }
 
     private void PickGoldPlayer()
@@ -30,7 +33,7 @@ public class Game : MonoBehaviour
 
         if(_countGold <= 0)
         {
-            //spawn stair
+            _stairEndGame.gameObject.SetActive(true);
         }
     }
 

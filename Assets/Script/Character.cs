@@ -11,16 +11,9 @@ public class Character : MonoBehaviour
     [SerializeField] private SwitchSound _switchSound;
     [SerializeField] private float _movementSpeed = 5f;
 
-    private bool _isMoveStair;
-    private Vector3 _stairPosition;
-    private bool _isGrounded;
-    private LayerMask _groundMask = 6;
-
     public UnityAction PickGold;
-
     public Rigidbody _rigidbody;
     public StateMachine StateMachine;
-
     public RunState RunState;
     public IdleState IdleState;
     public ClimbState ClimbState;
@@ -29,6 +22,11 @@ public class Character : MonoBehaviour
     public CrawlState CrawlState;
     public DieState DieState;
     public WinState WinState;
+
+    private bool _isMoveStair;
+    private Vector3 _stairPosition;
+    private bool _isGrounded;
+    private bool _isDead = false;
 
     public float MovementSpeed => _movementSpeed;
     public bool IsMoveStair => _isMoveStair;
@@ -62,11 +60,6 @@ public class Character : MonoBehaviour
         StateMachine.CurrentState.LogicUpdate();
 
         _isGrounded = CheckGround();
-        //Debug.Log("Ground  "+ _isGrounded);
-        //Debug.Log("Stair  " + _isMoveStair);
-        //Debug.Log("grav   " + _rigidbody.useGravity);
-
-        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -85,10 +78,17 @@ public class Character : MonoBehaviour
             Destroy(gold.gameObject);
         }
 
-        if(other.TryGetComponent<Enemy>(out Enemy enemy))
+        if(other.TryGetComponent<Enemy>(out Enemy enemy) && _isDead == false)
         {
             Debug.Log("game over");
+            _isDead = true;
             StateMachine.ChangeState(DieState);
+        }
+
+        if(other.TryGetComponent<ZoneEndGame>(out ZoneEndGame zoneEndGame))
+        {
+            Debug.Log("win game");
+            StateMachine.ChangeState(WinState);
         }
     }
 
@@ -120,10 +120,5 @@ public class Character : MonoBehaviour
         }
 
         return false;
-    }
-
-    private void OnDrawGizmos()
-    {
-        //Gizmos.DrawCube(transform.position, new Vector3(0.8f, 1.5f, 0.2f));
     }
 }
