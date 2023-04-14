@@ -6,7 +6,9 @@ using UnityEngine.Events;
 public class WinState : State
 {
     public event UnityAction<string> StartStateWin;
-    public event UnityAction EndStateWin;
+    public event UnityAction<float> EndStateWin;
+
+    private float _delayReboot = 13;
 
     public WinState(Character character, StateMachine stateMachine) : base(character, stateMachine)
     {
@@ -21,7 +23,7 @@ public class WinState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        EndStateWin?.Invoke();
+        EndStateWin?.Invoke(_delayReboot);
 
     }
 }
