@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(SwitchAnimations))]
+[RequireComponent(typeof(SwitchSound))]
 
 public class Character : MonoBehaviour
 {
@@ -17,9 +19,7 @@ public class Character : MonoBehaviour
     public RunState RunState;
     public IdleState IdleState;
     public ClimbState ClimbState;
-    public AttackState AttackState;
     public FallState FallState;
-    public CrawlState CrawlState;
     public DieState DieState;
     public WinState WinState;
 
@@ -39,7 +39,6 @@ public class Character : MonoBehaviour
         RunState = new RunState(this, StateMachine);
         IdleState = new IdleState(this, StateMachine);
         ClimbState = new ClimbState(this, StateMachine);
-        AttackState = new AttackState(this, StateMachine);
         FallState = new FallState(this, StateMachine);
         DieState = new DieState(this, StateMachine);
         WinState = new WinState(this, StateMachine);
@@ -80,14 +79,12 @@ public class Character : MonoBehaviour
 
         if(other.TryGetComponent<Enemy>(out Enemy enemy) && _isDead == false)
         {
-            Debug.Log("game over");
             _isDead = true;
             StateMachine.ChangeState(DieState);
         }
 
         if(other.TryGetComponent<ZoneEndGame>(out ZoneEndGame zoneEndGame))
         {
-            Debug.Log("win game");
             StateMachine.ChangeState(WinState);
         }
     }
@@ -106,7 +103,7 @@ public class Character : MonoBehaviour
         Collider[] colliders;
         float offset = 0.2f;
         Vector3 centerCheckBoxPoint = transform.position;
-        Vector3 sizeBox = new Vector3(0.6f, 0.1f, 0.1f);
+        Vector3 sizeBox = new Vector3(1f, 0.1f, 0.1f);
 
         centerCheckBoxPoint.y -= offset;
         colliders = Physics.OverlapBox(centerCheckBoxPoint, sizeBox);

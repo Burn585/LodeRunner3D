@@ -19,7 +19,6 @@ public class RunState : State
     public override void Enter()
     {
         base.Enter();
-        //Debug.Log("Enter moving state");
 
         StartStateRun?.Invoke(AnimatorPlayer.States.Run);
     }
@@ -45,10 +44,6 @@ public class RunState : State
         {
             _stateMachine.ChangeState(_character.FallState);
         }
-
-        //Die
-        //Crawl
-        //Fall
     }
 
     public override void LogicUpdate()

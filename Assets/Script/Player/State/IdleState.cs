@@ -17,7 +17,6 @@ public class IdleState : State
     public override void Enter()
     {
         base.Enter();
-        //Debug.Log("Enter idle state");
 
         StartStateIdle?.Invoke(AnimatorPlayer.States.Idle);
     }
@@ -43,9 +42,5 @@ public class IdleState : State
         {
             _stateMachine.ChangeState(_character.ClimbState);
         }
-
-        //Crawl
-        //Die
-        //Attack
     }
 }

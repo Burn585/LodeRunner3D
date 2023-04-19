@@ -11,6 +11,7 @@ public class ClimbState : State
 
     private float _verticalMove;
     private float _horizontalMove;
+    private float _centerStair = 0.8f;
 
     public ClimbState(Character character, StateMachine stateMachine) : base(character, stateMachine)
     {
@@ -21,12 +22,13 @@ public class ClimbState : State
         base.Enter();
 
         StartStateClimb?.Invoke(AnimatorPlayer.States.Climb);
-        _character._rigidbody.position = new Vector3(_character.StairPosition.x + 0.8f, _character._rigidbody.position.y, _character._rigidbody.position.z);
+        _character._rigidbody.position = new Vector3(_character.StairPosition.x + _centerStair, _character._rigidbody.position.y, _character._rigidbody.position.z);
     }
 
     public override void HandleInput()
     {
         base.HandleInput();
+
         _verticalMove = Input.GetAxis("Vertical");
         _horizontalMove = Input.GetAxis("Horizontal");
     }
@@ -44,10 +46,6 @@ public class ClimbState : State
         {
             _stateMachine.ChangeState(_character.IdleState);
         }
-
-        //Die
-        //Crawl
-        //Win
     }
 
     public override void LogicUpdate()
@@ -69,6 +67,7 @@ public class ClimbState : State
     public override void Exit()
     {
         base.Exit();
+
         PauseAnimation?.Invoke(false);
         EndStateClimb?.Invoke(AnimatorPlayer.States.Climb);
     }

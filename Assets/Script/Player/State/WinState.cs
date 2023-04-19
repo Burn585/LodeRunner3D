@@ -17,13 +17,14 @@ public class WinState : State
     public override void Enter()
     {
         base.Enter();
+
         StartStateWin?.Invoke(AnimatorPlayer.States.Win);
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        EndStateWin?.Invoke(_delayReboot);
 
+        EndStateWin?.Invoke(_delayReboot);
     }
 }

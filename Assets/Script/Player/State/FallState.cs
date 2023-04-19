@@ -43,9 +43,6 @@ public class FallState : State
         {
             _stateMachine.ChangeState(_character.ClimbState);
         }
-
-        //Crawl
-        //Die
     }
 
     public override void Exit()

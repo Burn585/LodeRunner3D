@@ -700,6 +700,7 @@ MonoBehaviour:
   _fall: {fileID: 0}
   _attack: {fileID: 0}
   _die: {fileID: 0}
+  _win: {fileID: 0}
 --- !u!1 &4231751335646571336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1922,7 +1923,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 18b8fb1745de993418c88fa734202a9a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.5
+      value: -0.5999999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 18b8fb1745de993418c88fa734202a9a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2008,7 +2009,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e10254b6850265d46a0cfc655dad6148, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.5
+      value: -0.5999999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e10254b6850265d46a0cfc655dad6148, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2352,7 +2353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4f65666442a2dfb4c9d7ab3a8656ca48, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.5
+      value: -0.5999999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4f65666442a2dfb4c9d7ab3a8656ca48, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3548,7 +3549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2876c86726213a748a0db5ad72d43815, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.5
+      value: -0.5999999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2876c86726213a748a0db5ad72d43815, type: 3}
       propertyPath: m_LocalPosition.y

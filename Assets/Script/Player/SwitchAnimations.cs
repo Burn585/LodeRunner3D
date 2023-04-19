@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Character))]
+[RequireComponent(typeof(Animator))]
+
 public class SwitchAnimations : MonoBehaviour
 {
     [SerializeField] private Character _character;

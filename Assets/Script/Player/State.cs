@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public abstract class State
 {
     protected Character _character;
