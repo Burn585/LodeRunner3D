@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SwitchAnimations))]
@@ -11,37 +10,63 @@ public class Character : MonoBehaviour
 {
     [SerializeField] private SwitchAnimations _switchAnimations;
     [SerializeField] private SwitchSound _switchSound;
+    [SerializeField] private DetectionStair _detectionStair;
+    [SerializeField] private EnemyKilling _enemyKilling;
+    [SerializeField] private DetectionZoneEndGame _detectionZoneEndGame;
     [SerializeField] private float _movementSpeed = 5f;
 
-    public UnityAction PickGold;
-    public Rigidbody _rigidbody;
-    public StateMachine StateMachine;
-    public RunState RunState;
-    public IdleState IdleState;
-    public ClimbState ClimbState;
-    public FallState FallState;
-    public DieState DieState;
-    public WinState WinState;
-
+    private Rigidbody _rigidbody;
+    private StateMachine _stateMachine;
+    private RunState _runState;
+    private IdleState _idleState;
+    private ClimbState _climbState;
+    private FallState _fallState;
+    private DieState _dieState;
+    private WinState _winState;
     private bool _isMoveStair;
     private Vector3 _stairPosition;
-    private bool _isGrounded;
     private bool _isDead = false;
+    private bool _isGrounded;
+    private CheckGround _checkGround = new CheckGround();
 
+    public Rigidbody Rigidbody => _rigidbody;
+    public RunState RunState => _runState;
+    public IdleState IdleState => _idleState;
+    public ClimbState ClimbState => _climbState;
+    public FallState FallState => _fallState;
+    public DieState DieState => _dieState;
+    public WinState WinState => _winState;
     public float MovementSpeed => _movementSpeed;
     public bool IsMoveStair => _isMoveStair;
     public Vector3 StairPosition => _stairPosition;
+    public bool IsDead => _isDead;
     public bool IsGrounded => _isGrounded;
 
     private void Awake()
     {
-        StateMachine = new StateMachine();
-        RunState = new RunState(this, StateMachine);
-        IdleState = new IdleState(this, StateMachine);
-        ClimbState = new ClimbState(this, StateMachine);
-        FallState = new FallState(this, StateMachine);
-        DieState = new DieState(this, StateMachine);
-        WinState = new WinState(this, StateMachine);
+        _stateMachine = new StateMachine();
+        _runState = new RunState(this, _stateMachine);
+        _idleState = new IdleState(this, _stateMachine);
+        _climbState = new ClimbState(this, _stateMachine);
+        _fallState = new FallState(this, _stateMachine);
+        _dieState = new DieState(this, _stateMachine);
+        _winState = new WinState(this, _stateMachine);
+    }
+
+    private void OnEnable()
+    {
+        _detectionStair.EnterZoneStair += EnterZoneStair;
+        _detectionStair.ExitZoneStair += ExitZoneStair;
+        _enemyKilling.CollisionEnemy += Die;
+        _detectionZoneEndGame.EnterZoneEndGame += EnterZoneEndGame;
+    }
+
+    private void OnDisable()
+    {
+        _detectionStair.EnterZoneStair -= EnterZoneStair;
+        _detectionStair.ExitZoneStair -= ExitZoneStair;
+        _enemyKilling.CollisionEnemy -= Die;
+        _detectionZoneEndGame.EnterZoneEndGame -= EnterZoneEndGame;
     }
 
     private void Start()
@@ -49,73 +74,40 @@ public class Character : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _switchAnimations.enabled = true;
         _switchSound.enabled = true;
-        StateMachine.Initialize(IdleState);
+        _stateMachine.Initialize(IdleState);
     }
 
     private void Update()
     {
-        StateMachine.CurrentState.HandleInput();
-        StateMachine.CurrentState.Transition();
-        StateMachine.CurrentState.LogicUpdate();
+        _stateMachine.CurrentState.HandleInput();
+        _stateMachine.CurrentState.Transition();
+        _stateMachine.CurrentState.LogicUpdate();
 
-        _isGrounded = CheckGround();
+        _isGrounded = _checkGround.Try(transform.position);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void EnterZoneStair(Vector3 stair)
     {
-        if (other.TryGetComponent<Stair>(out Stair stair))
-        {
-            _isMoveStair = true;
-            _stairPosition = stair.transform.position;
-            _rigidbody.useGravity = false;
-            _rigidbody.velocity = Vector3.zero;
-        }
-
-        if(other.TryGetComponent<Gold>(out Gold gold))
-        {
-            PickGold?.Invoke();
-            Destroy(gold.gameObject);
-        }
-
-        if(other.TryGetComponent<Enemy>(out Enemy enemy) && _isDead == false)
-        {
-            _isDead = true;
-            StateMachine.ChangeState(DieState);
-        }
-
-        if(other.TryGetComponent<ZoneEndGame>(out ZoneEndGame zoneEndGame))
-        {
-            StateMachine.ChangeState(WinState);
-        }
+        _isMoveStair = true;
+        _stairPosition = stair;
+        _rigidbody.useGravity = false;
+        _rigidbody.velocity = Vector3.zero;
     }
 
-    private void OnTriggerExit(Collider other)
+    private void ExitZoneStair()
     {
-        if (other.TryGetComponent<Stair>(out Stair stair))
-        {
-            _isMoveStair = false;
-            _rigidbody.useGravity = true;
-        }
+        _isMoveStair = false;
+        _rigidbody.useGravity = true;
     }
 
-    private bool CheckGround()
+    private void Die()
     {
-        Collider[] colliders;
-        float offset = 0.2f;
-        Vector3 centerCheckBoxPoint = transform.position;
-        Vector3 sizeBox = new Vector3(1f, 0.1f, 0.1f);
+        _isDead = true;
+        _stateMachine.ChangeState(DieState);
+    }
 
-        centerCheckBoxPoint.y -= offset;
-        colliders = Physics.OverlapBox(centerCheckBoxPoint, sizeBox);
-
-        foreach (var item in colliders)
-        {
-            if (item.TryGetComponent<Brick>(out Brick brick))
-            {
-                return true;
-            }
-        }
-
-        return false;
+    private void EnterZoneEndGame()
+    {
+        _stateMachine.ChangeState(WinState);
     }
 }

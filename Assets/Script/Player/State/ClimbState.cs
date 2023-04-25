@@ -22,7 +22,7 @@ public class ClimbState : State
         base.Enter();
 
         StartStateClimb?.Invoke(AnimatorPlayer.States.Climb);
-        _character._rigidbody.position = new Vector3(_character.StairPosition.x + _centerStair, _character._rigidbody.position.y, _character._rigidbody.position.z);
+        _character.Rigidbody.position = new Vector3(_character.StairPosition.x + _centerStair, _character.Rigidbody.position.y, _character.Rigidbody.position.z);
     }
 
     public override void HandleInput()
@@ -52,7 +52,7 @@ public class ClimbState : State
     {
         base.LogicUpdate();
 
-        _character._rigidbody.position += new Vector3(0, _verticalMove, 0) * _character.MovementSpeed * Time.deltaTime;
+        _character.Rigidbody.position += new Vector3(0, _verticalMove, 0) * _character.MovementSpeed * Time.deltaTime;
 
         if(_verticalMove == 0)
         {

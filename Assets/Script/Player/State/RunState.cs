@@ -51,7 +51,7 @@ public class RunState : State
         base.LogicUpdate();
 
         ChangeDirection?.Invoke(_horizontalMove);
-        _character._rigidbody.position += new Vector3(_horizontalMove, 0, 0) * _character.MovementSpeed * Time.deltaTime;
+        _character.Rigidbody.position += new Vector3(_horizontalMove, 0, 0) * _character.MovementSpeed * Time.deltaTime;
     }
 
     public override void Exit()

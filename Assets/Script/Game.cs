@@ -12,17 +12,27 @@ public class Game : MonoBehaviour
     [SerializeField] private Stair _stairEndGame;
 
     private int _countGold = 10;
+    private Gold[] golds;
 
     private void OnEnable()
     {
-        _character.PickGold += PickGoldPlayer;
+        golds = gameObject.GetComponentsInChildren<Gold>();
+
+        foreach (var gold in golds)
+        {
+            gold.PickGold += PickGoldPlayer;
+        }
         _character.DieState.EndStateDie += ReloadGame;
         _character.WinState.EndStateWin += ReloadGame;
     }
 
     private void OnDisable()
     {
-        _character.PickGold -= PickGoldPlayer;
+        foreach (var gold in golds)
+        {
+            gold.PickGold -= PickGoldPlayer;
+        }
+
         _character.DieState.EndStateDie -= ReloadGame;
         _character.WinState.EndStateWin -= ReloadGame;
     }

@@ -47,10 +47,10 @@ public class SwitchAnimations : MonoBehaviour
     private void Flip(float horizontalMove)
     {
         if(horizontalMove > 0)
-            _character._rigidbody.rotation = Quaternion.Euler(0, 180, 0);
+            _character.Rigidbody.rotation = Quaternion.Euler(0, 180, 0);
 
         if (horizontalMove < 0)
-            _character._rigidbody.rotation = Quaternion.Euler(0, 0, 0);
+            _character.Rigidbody.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     private void AnimationChanger(string animationName)
